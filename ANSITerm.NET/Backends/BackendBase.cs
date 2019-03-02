@@ -1,9 +1,9 @@
 using System;
 using System.Text;
 
-namespace ANSITerm.NET.Backends
+namespace ANSITerm.Backends
 {
-    public class DirectBackend : IConsoleBackend
+    public abstract class BackendBase : IConsoleBackend
     {
         public bool IsInputRedirected
         {
@@ -84,6 +84,8 @@ namespace ANSITerm.NET.Backends
             get => Console.WindowTop;
             set => Console.WindowTop = value;
         }
+        public abstract ColorValue ForegroundColor { get; set; }
+        public abstract ColorValue BackgroundColor { get; set; }
 
         public void Clear() => Console.Clear();
         public int Peek() => Console.In.Peek();

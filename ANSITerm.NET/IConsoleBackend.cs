@@ -33,5 +33,7 @@ namespace ANSITerm
         int WindowHeight { get; set; }
         int WindowLeft { get; set; }
         int WindowTop { get; set; }
+        ColorValue ForegroundColor { get; set; }
+        ColorValue BackgroundColor { get; set; }
     }
 }
