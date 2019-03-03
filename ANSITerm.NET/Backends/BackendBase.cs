@@ -86,13 +86,27 @@ namespace ANSITerm.Backends
         }
         public abstract ColorValue ForegroundColor { get; set; }
         public abstract ColorValue BackgroundColor { get; set; }
+        public ColorMode ColorMode { get; set; }
 
         public void Clear() => Console.Clear();
+
+        public abstract bool IsColorModeAvailable(ColorMode mode);
+
         public int Peek() => Console.In.Peek();
         public int Read() => Console.Read();
         public ConsoleKeyInfo ReadKey() => Console.ReadKey();
 
         public void SetCursorPosition(int x, int y) => Console.SetCursorPosition(x, y);
+
+        public bool TrySetColorMode(ColorMode mode)
+        {
+            if (IsColorModeAvailable(mode))
+            {
+                ColorMode = mode;
+                return true;
+            }
+            return false;
+        }
 
         public void Write(string data) => Console.Out.Write(data);
         public void WriteError(string data) => Console.Error.Write(data);

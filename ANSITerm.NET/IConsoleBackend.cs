@@ -35,5 +35,8 @@ namespace ANSITerm
         int WindowTop { get; set; }
         ColorValue ForegroundColor { get; set; }
         ColorValue BackgroundColor { get; set; }
+        ColorMode ColorMode { get; }
+        bool IsColorModeAvailable(ColorMode mode);
+        bool TrySetColorMode(ColorMode mode);
     }
 }
