@@ -8,7 +8,9 @@ namespace ANSITerm
         void Clear();
         void SetCursorPosition(int x, int y);
         void Write(string data);
+        void WriteLine(string data);
         void WriteError(string data);
+        void WriteErrorLine(string data);
         int Peek();
         int Read();
         ConsoleKeyInfo ReadKey();
@@ -33,8 +35,9 @@ namespace ANSITerm
         int WindowHeight { get; set; }
         int WindowLeft { get; set; }
         int WindowTop { get; set; }
-        ColorValue ForegroundColor { get; set; }
-        ColorValue BackgroundColor { get; set; }
+        ColorValue ForegroundColor { set; }
+        ColorValue BackgroundColor { set; }
+        void ResetColor();
         ColorMode ColorMode { get; }
         bool IsColorModeAvailable(ColorMode mode);
         bool TrySetColorMode(ColorMode mode);

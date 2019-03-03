@@ -2,10 +2,13 @@ namespace ANSITerm.Backends
 {
     public class ANSIBackend : BackendBase
     {
-        private ColorValue _fgColor = ColorValue.FromIndex(7, ColorMode.Color8);
+        internal ANSIBackend()
+        {
+            ColorMode = ColorMode.Color8;
+        }
+
         public override ColorValue ForegroundColor
         {
-            get => _fgColor;
             set
             {
                 if (value.Mode != ColorMode)
@@ -21,14 +24,11 @@ namespace ANSITerm.Backends
                     case ColorMode.TrueColor:
                         SetTrueColor(value, false); break;
                 }
-                _fgColor = value;
             }
         }
 
-        private ColorValue _bgColor = ColorValue.FromIndex(0, ColorMode.Color8);
         public override ColorValue BackgroundColor
         {
-            get => _bgColor;
             set
             {
                 if (value.Mode != ColorMode)
@@ -44,7 +44,6 @@ namespace ANSITerm.Backends
                     case ColorMode.TrueColor:
                         SetTrueColor(value, true); break;
                 }
-                _bgColor = value;
             }
         }
 
@@ -56,7 +55,7 @@ namespace ANSITerm.Backends
 
         private void Set4BitColor(ColorValue color, bool isBackground)
         {
-            var colorIndex = color.RawValue > 7 ? color.RawValue + 60 : color.RawValue;
+            var colorIndex = color.RawValue > 7 ? color.RawValue + 52 : color.RawValue;
             var code = (isBackground ? 40 : 30) + colorIndex;
             Write($"\x1B[{code}m");
         }

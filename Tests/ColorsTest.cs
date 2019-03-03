@@ -33,7 +33,7 @@ namespace Tests
         [ClassData(typeof(ColorConversionTestData))]
         public void TestColorConversion(Color source, int index, ColorMode mode)
         {
-            var color = ColorValue.FromColor(source);
+            var color = new ColorValue(source);
             Assert.Equal(source.ToArgb(), color.RawValue);
             Assert.Equal(ColorMode.TrueColor, color.Mode);
 

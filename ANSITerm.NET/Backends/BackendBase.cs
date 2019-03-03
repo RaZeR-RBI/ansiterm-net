@@ -84,9 +84,9 @@ namespace ANSITerm.Backends
             get => Console.WindowTop;
             set => Console.WindowTop = value;
         }
-        public abstract ColorValue ForegroundColor { get; set; }
-        public abstract ColorValue BackgroundColor { get; set; }
-        public ColorMode ColorMode { get; set; }
+        public abstract ColorValue ForegroundColor { set; }
+        public abstract ColorValue BackgroundColor { set; }
+        public ColorMode ColorMode { get; set; } = ColorMode.Color8;
 
         public void Clear() => Console.Clear();
 
@@ -108,7 +108,11 @@ namespace ANSITerm.Backends
             return false;
         }
 
-        public void Write(string data) => Console.Out.Write(data);
-        public void WriteError(string data) => Console.Error.Write(data);
+        public virtual void Write(string data) => Console.Out.Write(data);
+        public void WriteLine(string data) => Write(data + Environment.NewLine);
+        public virtual void WriteError(string data) => Console.Error.Write(data);
+        public void WriteErrorLine(string data) => WriteError(data + Environment.NewLine);
+
+        public void ResetColor() => Console.ResetColor();
     }
 }

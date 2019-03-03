@@ -18,14 +18,17 @@ namespace ANSITerm
         public int RawValue;
         public ColorMode Mode;
 
-        public static ColorValue FromColor(Color color) =>
-            new ColorValue
-            {
-                RawValue = color.ToArgb(),
-                Mode = ColorMode.TrueColor
-            };
+        public ColorValue(Color8 color) : this((int)color, ColorMode.Color8) { }
+        public ColorValue(Color16 color) : this((int)color, ColorMode.Color16) { }
+        public ColorValue(Color256 color) : this((int)color, ColorMode.Color256) { }
 
-        public static ColorValue FromIndex(int index, ColorMode mode)
+        public ColorValue(Color color)
+        {
+            RawValue = color.ToArgb();
+            Mode = ColorMode.TrueColor;
+        }
+
+        public ColorValue(int index, ColorMode mode)
         {
             if (mode == ColorMode.TrueColor)
                 throw new InvalidOperationException("Use FromColor for true color mode");
@@ -33,11 +36,8 @@ namespace ANSITerm
                 throw new ArgumentOutOfRangeException("Index cannot be less than zero");
             if (index >= (int)mode)
                 throw new ArgumentOutOfRangeException("Index is out of range");
-            return new ColorValue
-            {
-                RawValue = index,
-                Mode = mode
-            };
+            RawValue = index;
+            Mode = mode;
         }
 
         public Color AsColor()
