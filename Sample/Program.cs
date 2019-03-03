@@ -8,7 +8,7 @@ namespace Sample
 {
     class Program
     {
-        static string block = "#";
+        static string block = "-";
 
         static void Main(string[] args)
         {
@@ -26,6 +26,49 @@ namespace Sample
                 pair.Value();
                 term.ResetColor();
                 term.Write("\n\n\n");
+            }
+        }
+
+
+        static void Print8ColorPalette(IConsoleBackend term)
+        {
+            foreach (var color in EnumValues<Color8>())
+                Display(term, color);
+        }
+
+        static void Print16ColorPalette(IConsoleBackend term)
+        {
+            foreach (var color in EnumValues<Color16>())
+                Display(term, color);
+        }
+
+        static void Print256ColorPalette(IConsoleBackend term)
+        {
+            var i = 0;
+            for (i = 0; i < 16; i++)
+                Display(term, (Color256)i);
+            term.Write("\n\n");
+
+            for (i = 16; i < 232; i++)
+            {
+                Display(term, (Color256)i);
+                if ((i - 16) > 0 && (i - 15) % 36 == 0)
+                    term.Write("\n");
+            }
+            term.ResetColor();
+            term.Write("\n");
+            for (i = 232; i < 256; i++)
+                Display(term, (Color256)i);
+        }
+
+        static void PrintTrueColor(IConsoleBackend term)
+        {
+            var columns = term.WindowWidth / 2;
+            var hueStep = 360.0 / columns;
+            for (var i = 0; i < columns; i++)
+            {
+                var color = ColorFromHSV(i * hueStep, 1.0, 0.5);
+                Display(term, color);
             }
         }
 
@@ -70,51 +113,6 @@ namespace Sample
             term.BackgroundColor = new ColorValue(color);
             term.Write(block);
             term.ResetColor();
-        }
-
-        static void Print8ColorPalette(IConsoleBackend term)
-        {
-            foreach (var color in EnumValues<Color8>())
-                Display(term, color);
-        }
-
-        static void Print16ColorPalette(IConsoleBackend term)
-        {
-            foreach (var color in EnumValues<Color16>())
-            {
-                term.ForegroundColor = new ColorValue(color);
-                term.Write(block);
-            }
-        }
-
-        static void Print256ColorPalette(IConsoleBackend term)
-        {
-            var i = 0;
-            for (i = 0; i < 16; i++)
-                Display(term, (Color256)i);
-            term.Write("\n\n");
-
-            for (i = 16; i < 232; i++)
-            {
-                Display(term, (Color256)i);
-                if ((i - 16) > 0 && (i - 15) % 36 == 0)
-                    term.Write("\n");
-            }
-            term.ResetColor();
-            term.Write("\n");
-            for (i = 232; i < 256; i++)
-                Display(term, (Color256)i);
-        }
-
-        static void PrintTrueColor(IConsoleBackend term)
-        {
-            var columns = term.WindowWidth / 2;
-            var hueStep = 360.0 / columns;
-            for (var i = 0; i < columns; i++)
-            {
-                var color = ColorFromHSV(i * hueStep, 1.0, 0.5);
-                Display(term, color);
-            }
         }
 
         public static Color ColorFromHSV(double hue, double saturation, double value)

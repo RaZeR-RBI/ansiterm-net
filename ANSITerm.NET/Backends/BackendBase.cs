@@ -28,11 +28,6 @@ namespace ANSITerm.Backends
             get => Console.CursorLeft;
             set => Console.CursorLeft = value;
         }
-        public int CursorSize
-        {
-            get => Console.CursorSize;
-            set => Console.CursorSize = value;
-        }
         public int CursorTop
         {
             get => Console.CursorTop;
@@ -114,5 +109,26 @@ namespace ANSITerm.Backends
         public void WriteErrorLine(string data) => WriteError(data + Environment.NewLine);
 
         public void ResetColor() => Console.ResetColor();
+
+        public void MoveCursor(Direction direction, int steps)
+        {
+            var top = CursorTop;
+            var left = CursorLeft;
+            switch (direction)
+            {
+                case Direction.Up:
+                    top -= 1; break;
+                case Direction.Down:
+                    top += 1; break;
+                case Direction.Backward:
+                    left -= 1; break;
+                case Direction.Forward:
+                    left += 1; break;
+            }
+            if (top != CursorTop)
+                CursorTop = Math.Max(0, Math.Min(top, BufferHeight - 1));
+            if (left != CursorLeft)
+                CursorLeft = Math.Max(0, Math.Min(top, BufferWidth - 1));
+        }
     }
 }

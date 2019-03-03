@@ -3,10 +3,19 @@ using System.Text;
 
 namespace ANSITerm
 {
+    public enum Direction
+    {
+        Up,
+        Down,
+        Forward,
+        Backward
+    }
+
     public interface IConsoleBackend
     {
         void Clear();
         void SetCursorPosition(int x, int y);
+        void MoveCursor(Direction direction, int steps);
         void Write(string data);
         void WriteLine(string data);
         void WriteError(string data);
@@ -19,7 +28,6 @@ namespace ANSITerm
         int BufferWidth { get; set; }
         bool CapsLock { get; }
         int CursorLeft { get; set; }
-        int CursorSize { get; set; }
         int CursorTop { get; set; }
         bool CursorVisible { get; set; }
         Encoding InputEncoding { get; set; }
