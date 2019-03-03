@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace ANSITerm
 {
@@ -38,11 +40,32 @@ namespace ANSITerm
             };
         }
 
-        public ColorValue Quantize(ColorMode targetMode)
+        public void Transform(ColorMode targetMode)
         {
-            if (this.Mode == targetMode) return this;
-            // TODO: Implement color distance calculation
-            throw new NotImplementedException();
+            if (this.Mode == targetMode) return;
+            if (this.Mode > targetMode)
+                Quantize(targetMode);
+            else
+                Dequantize(targetMode);
+        }
+
+        private void Quantize(ColorMode targetMode)
+        {
+            if (Mode == ColorMode.TrueColor)
+            {
+                RawValue = ColorUtil.ClosestIndexedTo(Color.FromArgb(RawValue), targetMode);
+                Mode = targetMode;
+                return;
+            }
+            RawValue = ColorUtil.QuantizeIndexed(RawValue, targetMode);
+            Mode = targetMode;
+        }
+
+        private void Dequantize(ColorMode targetMode)
+        {
+            if (targetMode == ColorMode.TrueColor)
+                RawValue = ColorUtil.IndexedColors[this.RawValue].ToArgb();
+            Mode = targetMode;
         }
     }
 
@@ -345,7 +368,57 @@ namespace ANSITerm
 
     internal static class ColorUtil
     {
-        internal static Color[] s_indexedColors = new Color[] {
+        public static IReadOnlyList<Color> IndexedColors => s_indexedColors;
+
+        public static float DistanceSquared(Color one, Color two)
+        {
+            // https://en.wikipedia.org/wiki/Color_difference#Euclidean
+            float r = (one.R + two.R) / 2.0f;
+            float deltaRSq = one.R - two.R; deltaRSq *= deltaRSq;
+            float deltaGSq = one.G - two.G; deltaGSq *= deltaGSq;
+            float deltaBSq = one.B - two.B; deltaBSq *= deltaBSq;
+            return (2 + r / 256.0f) * deltaRSq +
+                4 * deltaGSq +
+                (2 + (255.0f - r) / 256.0f) * deltaBSq;
+        }
+
+        private static Dictionary<ColorMode, byte[]> s_indexMaps =
+            new Dictionary<ColorMode, byte[]>();
+
+        public static int QuantizeIndexed(int index, ColorMode targetMode)
+        {
+            return s_indexMaps[targetMode][index];
+        }
+
+        static ColorUtil()
+        {
+            var modes = new ColorMode[] { ColorMode.Color8, ColorMode.Color16 };
+            foreach (var mode in modes)
+            {
+                var indexes = new byte[IndexedColors.Count];
+                for (var i = 0; i < indexes.Length; i++)
+                {
+                    indexes[i] = (byte)ClosestIndexedTo(IndexedColors[i], mode);
+                }
+                s_indexMaps.Add(mode, indexes);
+            }
+        }
+
+        public static int ClosestIndexedTo(Color target, ColorMode mode)
+        {
+            var distances = new float[(int)mode];
+            for (var i = 0; i < distances.Length; i++)
+            {
+                distances[i] = DistanceSquared(target, IndexedColors[i]);
+                if (distances[i] <= float.Epsilon)
+                {
+                    return i;
+                }
+            }
+            return Array.IndexOf(distances, distances.Min());
+        }
+
+        private static Color[] s_indexedColors = new Color[] {
             Color.FromArgb(0, 0, 0),
             Color.FromArgb(128, 0, 0),
             Color.FromArgb(0, 128, 0),
