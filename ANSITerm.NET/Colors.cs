@@ -40,6 +40,13 @@ namespace ANSITerm
             };
         }
 
+        public Color AsColor()
+        {
+            if (this.Mode == ColorMode.TrueColor)
+                return Color.FromArgb(this.RawValue);
+            return ColorUtil.IndexedColors[this.RawValue];
+        }
+
         public void Transform(ColorMode targetMode)
         {
             if (this.Mode == targetMode) return;
@@ -395,9 +402,19 @@ namespace ANSITerm
             var modes = new ColorMode[] { ColorMode.Color8, ColorMode.Color16 };
             foreach (var mode in modes)
             {
+                var count = (int)mode;
                 var indexes = new byte[IndexedColors.Count];
-                for (var i = 0; i < indexes.Length; i++)
+                for (byte j = 0; j < count; j++)
                 {
+                    indexes[j] = j;
+                }
+                for (var i = count; i < indexes.Length; i++)
+                {
+                    // map bright colors to normal ones
+                    if (mode == ColorMode.Color8 && i < 16)
+                    {
+                        indexes[i] = (byte)(i - 8); continue;
+                    }
                     indexes[i] = (byte)ClosestIndexedTo(IndexedColors[i], mode);
                 }
                 s_indexMaps.Add(mode, indexes);
