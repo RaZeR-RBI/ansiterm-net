@@ -21,8 +21,8 @@ namespace Sample
             };
             foreach (var pair in parts)
             {
-                term.WriteLine($"Mode: {pair.Key}");
-                term.TrySetColorMode(pair.Key);
+                var available = term.TrySetColorMode(pair.Key);
+                term.WriteLine($"Mode: {pair.Key}, available: {available}");
                 pair.Value();
                 term.ResetColor();
                 term.Write("\n\n\n");

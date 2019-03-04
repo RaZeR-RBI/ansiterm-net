@@ -8,10 +8,16 @@ namespace ANSITerm
         private static IConsoleBackend s_instance = null;
         public static IConsoleBackend GetInstance()
         {
-            // TODO: Add Windows support code
             if (s_instance == null)
-                s_instance = new ANSIBackend();
+                s_instance = DetectAndCreate();
             return s_instance;
+        }
+
+        private static IConsoleBackend DetectAndCreate()
+        {
+            if (Detector.IsStdOnly())
+                return new StdBackend();
+            return new ANSIBackend();
         }
     }
 }

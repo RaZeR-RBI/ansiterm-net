@@ -1,7 +1,10 @@
+using System;
+
 namespace ANSITerm.Backends
 {
     public class ANSIBackend : BackendBase
     {
+
         internal ANSIBackend()
         {
             ColorMode = ColorMode.Color8;
@@ -16,9 +19,8 @@ namespace ANSITerm.Backends
                 switch (value.Mode)
                 {
                     case ColorMode.Color8:
-                        Set3BitColor(value, false); break;
                     case ColorMode.Color16:
-                        Set4BitColor(value, false); break;
+                        Console.ForegroundColor = ColorUtil.AsConsoleColor(value); break;
                     case ColorMode.Color256:
                         Set8BitColor(value, false); break;
                     case ColorMode.TrueColor:
@@ -36,9 +38,8 @@ namespace ANSITerm.Backends
                 switch (value.Mode)
                 {
                     case ColorMode.Color8:
-                        Set3BitColor(value, true); break;
                     case ColorMode.Color16:
-                        Set4BitColor(value, true); break;
+                        Console.BackgroundColor = ColorUtil.AsConsoleColor(value); break;
                     case ColorMode.Color256:
                         Set8BitColor(value, true); break;
                     case ColorMode.TrueColor:
@@ -47,18 +48,6 @@ namespace ANSITerm.Backends
             }
         }
 
-        private void Set3BitColor(ColorValue color, bool isBackground)
-        {
-            var code = (isBackground ? 40 : 30) + color.RawValue;
-            Write($"\x1B[{code}m");
-        }
-
-        private void Set4BitColor(ColorValue color, bool isBackground)
-        {
-            var colorIndex = color.RawValue > 7 ? color.RawValue + 52 : color.RawValue;
-            var code = (isBackground ? 40 : 30) + colorIndex;
-            Write($"\x1B[{code}m");
-        }
 
         private void Set8BitColor(ColorValue color, bool isBackground)
         {
@@ -75,8 +64,5 @@ namespace ANSITerm.Backends
             var code = (isBackground ? 48 : 38);
             Write($"\x1B[{code};2;{r};{g};{b}m");
         }
-
-        // TODO: Add additional checks
-        public override bool IsColorModeAvailable(ColorMode mode) => true;
     }
 }

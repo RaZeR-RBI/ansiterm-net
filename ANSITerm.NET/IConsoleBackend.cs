@@ -23,26 +23,25 @@ namespace ANSITerm
         int Peek();
         int Read();
         ConsoleKeyInfo ReadKey();
+        ConsoleKeyInfo ReadKey(bool intercept);
         bool IsInputRedirected { get; }
-        int BufferHeight { get; set; }
-        int BufferWidth { get; set; }
-        bool CapsLock { get; }
-        int CursorLeft { get; set; }
-        int CursorTop { get; set; }
-        bool CursorVisible { get; set; }
+        int BufferHeight { get; }
+        int BufferWidth { get; }
+        int CursorLeft { get; }
+        int CursorTop { get; }
+        bool CursorVisible { set; }
         Encoding InputEncoding { get; set; }
         bool IsErrorRedirected { get; }
-        int WindowWidth { get; set; }
+        int WindowWidth { get; }
         bool IsOutputRedirected { get; }
         bool KeyAvailable { get; }
         int LargestWindowHeight { get; }
         int LargestWindowWidth { get; }
-        bool NumberLock { get; }
         Encoding OutputEncoding { get; set; }
-        string Title { get; set; }
-        int WindowHeight { get; set; }
-        int WindowLeft { get; set; }
-        int WindowTop { get; set; }
+        string Title { set; }
+        int WindowHeight { get; }
+        int WindowLeft { get; }
+        int WindowTop { get; }
         ColorValue ForegroundColor { set; }
         ColorValue BackgroundColor { set; }
         void ResetColor();

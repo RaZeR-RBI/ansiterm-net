@@ -379,14 +379,11 @@ namespace ANSITerm
 
         public static float DistanceSquared(Color one, Color two)
         {
-            // https://en.wikipedia.org/wiki/Color_difference#Euclidean
             float r = (one.R + two.R) / 2.0f;
             float deltaRSq = one.R - two.R; deltaRSq *= deltaRSq;
             float deltaGSq = one.G - two.G; deltaGSq *= deltaGSq;
             float deltaBSq = one.B - two.B; deltaBSq *= deltaBSq;
-            return (2 + r / 256.0f) * deltaRSq +
-                4 * deltaGSq +
-                (2 + (255.0f - r) / 256.0f) * deltaBSq;
+            return deltaRSq + deltaGSq + deltaBSq;
         }
 
         private static Dictionary<ColorMode, byte[]> s_indexMaps =
@@ -434,6 +431,35 @@ namespace ANSITerm
             }
             return Array.IndexOf(distances, distances.Min());
         }
+
+        public static ConsoleColor AsConsoleColor(ColorValue value)
+        {
+            if (value.Mode != ColorMode.Color16)
+                value.Transform(ColorMode.Color16);
+            return (ConsoleColor)s_consoleColorToAnsiCode[value.RawValue];
+        }
+        private static readonly int[] s_consoleColorToAnsiCode = new int[]
+        {
+            // Dark/Normal colors
+            0, // Black,
+            4, // DarkBlue,
+            2, // DarkGreen,
+            6, // DarkCyan,
+            1, // DarkRed,
+            5, // DarkMagenta,
+            3, // DarkYellow,
+            7, // Gray,
+
+            // Bright colors
+            8,  // DarkGray,
+            12, // Blue,
+            10, // Green,
+            14, // Cyan,
+            9,  // Red,
+            13, // Magenta,
+            11, // Yellow,
+            15  // White
+        };
 
         private static Color[] s_indexedColors = new Color[] {
             Color.FromArgb(0, 0, 0),
@@ -694,5 +720,4 @@ namespace ANSITerm
             Color.FromArgb(238, 238, 238)
         };
     }
-    // TODO: Add required enums and constants
 }

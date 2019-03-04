@@ -5,37 +5,13 @@ namespace ANSITerm.Backends
 {
     public abstract class BackendBase : IConsoleBackend
     {
-        public bool IsInputRedirected
-        {
-            get => Console.IsInputRedirected;
-        }
-        public int BufferHeight
-        {
-            get => Console.BufferHeight;
-            set => Console.BufferHeight = value;
-        }
-        public int BufferWidth
-        {
-            get => Console.BufferWidth;
-            set => Console.BufferWidth = value;
-        }
-        public bool CapsLock
-        {
-            get => Console.CapsLock;
-        }
-        public int CursorLeft
-        {
-            get => Console.CursorLeft;
-            set => Console.CursorLeft = value;
-        }
-        public int CursorTop
-        {
-            get => Console.CursorTop;
-            set => Console.CursorTop = value;
-        }
+        public bool IsInputRedirected => Console.IsInputRedirected;
+        public int BufferHeight => Console.BufferHeight;
+        public int BufferWidth => Console.BufferWidth;
+        public int CursorLeft => Console.CursorLeft;
+        public int CursorTop => Console.CursorTop;
         public bool CursorVisible
         {
-            get => Console.CursorVisible;
             set => Console.CursorVisible = value;
         }
         public Encoding InputEncoding
@@ -53,7 +29,6 @@ namespace ANSITerm.Backends
         public bool KeyAvailable => Console.KeyAvailable;
         public int LargestWindowHeight => Console.LargestWindowHeight;
         public int LargestWindowWidth => Console.LargestWindowWidth;
-        public bool NumberLock => Console.NumberLock;
         public Encoding OutputEncoding
         {
             get => Console.OutputEncoding;
@@ -61,35 +36,29 @@ namespace ANSITerm.Backends
         }
         public string Title
         {
-            get => Console.Title;
             set => Console.Title = value;
         }
-        public int WindowHeight
-        {
-            get => Console.WindowHeight;
-            set => Console.WindowHeight = value;
-        }
-        public int WindowLeft
-        {
-            get => Console.WindowLeft;
-            set => Console.WindowLeft = value;
-        }
-        public int WindowTop
-        {
-            get => Console.WindowTop;
-            set => Console.WindowTop = value;
-        }
+        public int WindowHeight => Console.WindowHeight;
+        public int WindowLeft => Console.WindowLeft;
+        public int WindowTop => Console.WindowTop;
         public abstract ColorValue ForegroundColor { set; }
         public abstract ColorValue BackgroundColor { set; }
         public ColorMode ColorMode { get; set; } = ColorMode.Color8;
 
+        protected ColorMode BestMode { get; private set; }
+        public BackendBase()
+        {
+            ColorMode = BestMode = Detector.GetBestColorMode();
+        }
+
         public void Clear() => Console.Clear();
 
-        public abstract bool IsColorModeAvailable(ColorMode mode);
+        public bool IsColorModeAvailable(ColorMode mode) => mode <= BestMode;
 
         public int Peek() => Console.In.Peek();
         public int Read() => Console.Read();
         public ConsoleKeyInfo ReadKey() => Console.ReadKey();
+        public ConsoleKeyInfo ReadKey(bool intercept) => Console.ReadKey(intercept);
 
         public void SetCursorPosition(int x, int y) => Console.SetCursorPosition(x, y);
 
@@ -110,7 +79,7 @@ namespace ANSITerm.Backends
 
         public void ResetColor() => Console.ResetColor();
 
-        public void MoveCursor(Direction direction, int steps)
+        public virtual void MoveCursor(Direction direction, int steps)
         {
             var top = CursorTop;
             var left = CursorLeft;
@@ -125,10 +94,10 @@ namespace ANSITerm.Backends
                 case Direction.Forward:
                     left += 1; break;
             }
-            if (top != CursorTop)
-                CursorTop = Math.Max(0, Math.Min(top, BufferHeight - 1));
-            if (left != CursorLeft)
-                CursorLeft = Math.Max(0, Math.Min(top, BufferWidth - 1));
+            top = Math.Max(0, Math.Min(top, BufferHeight - 1));
+            left = Math.Max(0, Math.Min(top, BufferWidth - 1));
+            SetCursorPosition(top, left);
         }
+
     }
 }
