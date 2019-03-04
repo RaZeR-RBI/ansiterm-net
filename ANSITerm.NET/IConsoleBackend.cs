@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Text;
 
 namespace ANSITerm
@@ -15,6 +16,7 @@ namespace ANSITerm
     {
         void Clear();
         void SetCursorPosition(int x, int y);
+        void SetCursorPosition(Point p);
         void MoveCursor(Direction direction, int steps);
         void Write(string data);
         void WriteLine(string data);
@@ -29,6 +31,7 @@ namespace ANSITerm
         int BufferWidth { get; }
         int CursorLeft { get; }
         int CursorTop { get; }
+        Point CursorPosition { get; }
         bool CursorVisible { set; }
         Encoding InputEncoding { get; set; }
         bool IsErrorRedirected { get; }

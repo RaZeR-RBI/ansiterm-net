@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Text;
 
 namespace ANSITerm.Backends
@@ -46,6 +47,9 @@ namespace ANSITerm.Backends
         public ColorMode ColorMode { get; set; } = ColorMode.Color8;
 
         protected ColorMode BestMode { get; private set; }
+
+        public Point CursorPosition => new Point(CursorLeft, CursorTop);
+
         public BackendBase()
         {
             ColorMode = BestMode = Detector.GetBestColorMode();
@@ -99,5 +103,6 @@ namespace ANSITerm.Backends
             SetCursorPosition(top, left);
         }
 
+        public void SetCursorPosition(Point p) => SetCursorPosition(p.X, p.Y);
     }
 }

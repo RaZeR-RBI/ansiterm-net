@@ -64,5 +64,18 @@ namespace ANSITerm.Backends
             var code = (isBackground ? 48 : 38);
             Write($"\x1B[{code};2;{r};{g};{b}m");
         }
+
+        public override void MoveCursor(Direction direction, int steps)
+        {
+            char code = 'A';
+            switch (direction)
+            {
+                case Direction.Up: code = 'A'; break;
+                case Direction.Down: code = 'B'; break;
+                case Direction.Forward: code = 'C'; break;
+                case Direction.Backward: code = 'D'; break;
+            }
+            Write($"\x1B[{steps}{code}");
+        }
     }
 }
