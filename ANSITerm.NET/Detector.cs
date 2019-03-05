@@ -31,8 +31,7 @@ namespace ANSITerm
             {
                 try
                 {
-                    var colorCount = GetMaxColorsFromTermInfo();
-                    return (ColorMode)colorCount;
+                    return GetANSIColorCount();
                 }
                 catch (Exception ex)
                 {
@@ -45,8 +44,32 @@ namespace ANSITerm
 
         public static bool IsStdOnly()
         {
-            // TODO: Add Windows terminal emulator detection like ConEmu and others
-            return IsOSPlatform(OSPlatform.Windows);
+            if (!IsOSPlatform(OSPlatform.Windows)) return false;
+            // Windows checks
+            return !(IsConEmuANSI() || IsMSYS2());
+        }
+
+        private static bool IsConEmuANSI() =>
+            Environment.GetEnvironmentVariable("CONEMUANSI") == "ON";
+        
+        private static bool IsMSYS2() =>
+            Environment.GetEnvironmentVariable("MSYSCON") != null;
+
+        private static ColorMode GetANSIColorCount()
+        {
+            if (IsOSPlatform(OSPlatform.Windows))
+            // assume that ConEmu true color support is enabled
+            // looks like there is no way to properly detect it
+                return ColorMode.TrueColor;
+            
+            var colors = GetMaxColorsFromTermInfo();
+            var result = ColorMode.Color8;
+            foreach(var mode in Enum.GetValues(typeof(ColorMode)).Cast<int>())
+            {
+                if (colors < mode) break;
+                result = (ColorMode)mode;
+            }
+            return result;
         }
     }
 }

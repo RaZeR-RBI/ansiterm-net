@@ -12,6 +12,7 @@ namespace Sample
 
         static void Main(string[] args)
         {
+            var forceColorMode = args.Contains("force");
             var term = ANSIConsole.GetInstance();
             var parts = new Dictionary<ColorMode, Action>() {
                 {ColorMode.Color8, () => Print8ColorPalette(term) },
@@ -19,14 +20,17 @@ namespace Sample
                 {ColorMode.Color256, () => Print256ColorPalette(term) },
                 {ColorMode.TrueColor, () => PrintTrueColor(term) }
             };
+            term.WriteLine($"Forcing color mode: {forceColorMode}, add 'force' as argument to enable");
             foreach (var pair in parts)
             {
                 var available = term.TrySetColorMode(pair.Key);
+                if (forceColorMode) term.ColorMode = pair.Key;
                 term.WriteLine($"Mode: {pair.Key}, available: {available}");
                 pair.Value();
                 term.ResetColor();
                 term.Write("\n\n\n");
             }
+            DoCursorMovements(term);
         }
 
 
@@ -47,13 +51,17 @@ namespace Sample
             var i = 0;
             for (i = 0; i < 16; i++)
                 Display(term, (Color256)i);
+            term.ResetColor();
             term.Write("\n\n");
 
             for (i = 16; i < 232; i++)
             {
                 Display(term, (Color256)i);
                 if ((i - 16) > 0 && (i - 15) % 36 == 0)
+                {
+                    term.ResetColor();
                     term.Write("\n");
+                }
             }
             term.ResetColor();
             term.Write("\n");
@@ -70,6 +78,17 @@ namespace Sample
                 var color = ColorFromHSV(i * hueStep, 1.0, 0.5);
                 Display(term, color);
             }
+        }
+
+        static void DoCursorMovements(IConsoleBackend term)
+        {
+            for (int i = 0; i < 3; i++)
+                term.WriteLine("....");
+            term.MoveCursor(Direction.Up, 2);
+            term.Write("This line sticks to the left");
+            term.SetCursorPosition(0, term.CursorTop + 1);
+            term.MoveCursor(Direction.Forward, 2);
+            term.Write("This line is offset by two characters");
         }
 
         static IEnumerable<T> EnumValues<T>() =>
@@ -115,7 +134,7 @@ namespace Sample
             term.ResetColor();
         }
 
-        public static Color ColorFromHSV(double hue, double saturation, double value)
+        static Color ColorFromHSV(double hue, double saturation, double value)
         {
             int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
             double f = hue / 60 - Math.Floor(hue / 60);

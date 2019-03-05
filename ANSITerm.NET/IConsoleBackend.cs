@@ -27,28 +27,22 @@ namespace ANSITerm
         ConsoleKeyInfo ReadKey();
         ConsoleKeyInfo ReadKey(bool intercept);
         bool IsInputRedirected { get; }
-        int BufferHeight { get; }
-        int BufferWidth { get; }
         int CursorLeft { get; }
         int CursorTop { get; }
         Point CursorPosition { get; }
         bool CursorVisible { set; }
         Encoding InputEncoding { get; set; }
         bool IsErrorRedirected { get; }
-        int WindowWidth { get; }
         bool IsOutputRedirected { get; }
         bool KeyAvailable { get; }
-        int LargestWindowHeight { get; }
-        int LargestWindowWidth { get; }
         Encoding OutputEncoding { get; set; }
         string Title { set; }
+        int WindowWidth { get; }
         int WindowHeight { get; }
-        int WindowLeft { get; }
-        int WindowTop { get; }
         ColorValue ForegroundColor { set; }
         ColorValue BackgroundColor { set; }
         void ResetColor();
-        ColorMode ColorMode { get; }
+        ColorMode ColorMode { get; set; }
         bool IsColorModeAvailable(ColorMode mode);
         bool TrySetColorMode(ColorMode mode);
     }

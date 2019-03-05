@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
@@ -7,8 +9,6 @@ namespace ANSITerm.Backends
     public abstract class BackendBase : IConsoleBackend
     {
         public bool IsInputRedirected => Console.IsInputRedirected;
-        public int BufferHeight => Console.BufferHeight;
-        public int BufferWidth => Console.BufferWidth;
         public int CursorLeft => Console.CursorLeft;
         public int CursorTop => Console.CursorTop;
         public bool CursorVisible
@@ -21,11 +21,6 @@ namespace ANSITerm.Backends
             set => Console.InputEncoding = value;
         }
         public bool IsErrorRedirected => Console.IsErrorRedirected;
-        public int WindowWidth
-        {
-            get => Console.WindowWidth;
-            set => Console.WindowWidth = value;
-        }
         public bool IsOutputRedirected => Console.IsOutputRedirected;
         public bool KeyAvailable => Console.KeyAvailable;
         public int LargestWindowHeight => Console.LargestWindowHeight;
@@ -39,9 +34,8 @@ namespace ANSITerm.Backends
         {
             set => Console.Title = value;
         }
-        public int WindowHeight => Console.WindowHeight;
-        public int WindowLeft => Console.WindowLeft;
-        public int WindowTop => Console.WindowTop;
+        public int WindowWidth => GetWindowWidth();
+        public int WindowHeight => GetWindowHeight();
         public abstract ColorValue ForegroundColor { set; }
         public abstract ColorValue BackgroundColor { set; }
         public ColorMode ColorMode { get; set; } = ColorMode.Color8;
@@ -81,7 +75,7 @@ namespace ANSITerm.Backends
         public virtual void WriteError(string data) => Console.Error.Write(data);
         public void WriteErrorLine(string data) => WriteError(data + Environment.NewLine);
 
-        public void ResetColor() => Console.ResetColor();
+        public virtual void ResetColor() => Console.ResetColor();
 
         public virtual void MoveCursor(Direction direction, int steps)
         {
@@ -98,11 +92,12 @@ namespace ANSITerm.Backends
                 case Direction.Forward:
                     left += 1; break;
             }
-            top = Math.Max(0, Math.Min(top, BufferHeight - 1));
-            left = Math.Max(0, Math.Min(top, BufferWidth - 1));
             SetCursorPosition(top, left);
         }
 
         public void SetCursorPosition(Point p) => SetCursorPosition(p.X, p.Y);
+
+        protected virtual int GetWindowWidth() => Console.WindowWidth;
+        protected virtual int GetWindowHeight() => Console.WindowHeight;
     }
 }
