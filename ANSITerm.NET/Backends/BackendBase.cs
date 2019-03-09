@@ -59,7 +59,7 @@ namespace ANSITerm.Backends
         public ConsoleKeyInfo ReadKey() => Console.ReadKey();
         public ConsoleKeyInfo ReadKey(bool intercept) => Console.ReadKey(intercept);
 
-        public virtual void SetCursorPosition(int x, int y) => Console.SetCursorPosition(x, y);
+        public abstract void SetCursorPosition(int x, int y);
 
         public bool TrySetColorMode(ColorMode mode)
         {
@@ -85,15 +85,15 @@ namespace ANSITerm.Backends
             switch (direction)
             {
                 case Direction.Up:
-                    top -= 1; break;
+                    top -= steps; break;
                 case Direction.Down:
-                    top += 1; break;
+                    top += steps; break;
                 case Direction.Backward:
-                    left -= 1; break;
+                    left -= steps; break;
                 case Direction.Forward:
-                    left += 1; break;
+                    left += steps; break;
             }
-            SetCursorPosition(top, left);
+            SetCursorPosition(left, top);
         }
 
         public void SetCursorPosition(Point p) => SetCursorPosition(p.X, p.Y);

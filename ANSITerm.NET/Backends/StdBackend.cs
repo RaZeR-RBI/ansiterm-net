@@ -21,10 +21,19 @@ namespace ANSITerm.Backends
             }
         }
 
-        public override int CursorLeft => Console.CursorLeft;
+        public override int CursorLeft => Console.CursorLeft - _startPoint.X;
 
-        public override int CursorTop => Console.CursorTop;
+        public override int CursorTop => Console.CursorTop - _startPoint.Y;
 
-        public override Point CursorPosition => new Point(Console.CursorLeft,Console.CursorTop);
+        public override Point CursorPosition => new Point(CursorLeft, CursorTop);
+
+        private Point _startPoint = new Point();
+        public StdBackend(): base()
+        {
+            _startPoint = new Point(Console.CursorLeft, Console.CursorTop);
+        }
+
+        public override void SetCursorPosition(int x, int y) =>
+            Console.SetCursorPosition(x + _startPoint.X, y + _startPoint.Y);
     }
 }

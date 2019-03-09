@@ -77,7 +77,7 @@ namespace ANSITerm.Backends
             if (_useANSIForCursor)
                 Write($"\x1B[{y};{x}H");
             else
-                base.SetCursorPosition(x, y);
+                Console.SetCursorPosition(x, y);
         }
 
         private void Set8BitColor(ColorValue color, bool isBackground)
