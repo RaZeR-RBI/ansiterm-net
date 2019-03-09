@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace ANSITerm.Backends
 {
@@ -19,5 +20,11 @@ namespace ANSITerm.Backends
                 Console.BackgroundColor = ColorUtil.AsConsoleColor(value);
             }
         }
+
+        public override int CursorLeft => Console.CursorLeft;
+
+        public override int CursorTop => Console.CursorTop;
+
+        public override Point CursorPosition => new Point(Console.CursorLeft,Console.CursorTop);
     }
 }

@@ -9,8 +9,8 @@ namespace ANSITerm.Backends
     public abstract class BackendBase : IConsoleBackend
     {
         public bool IsInputRedirected => Console.IsInputRedirected;
-        public int CursorLeft => Console.CursorLeft;
-        public int CursorTop => Console.CursorTop;
+        public abstract int CursorLeft { get; }
+        public abstract int CursorTop { get; }
         public bool CursorVisible
         {
             set => Console.CursorVisible = value;
@@ -42,10 +42,11 @@ namespace ANSITerm.Backends
 
         protected ColorMode BestMode { get; private set; }
 
-        public Point CursorPosition => new Point(CursorLeft, CursorTop);
+        public abstract Point CursorPosition { get; }
 
         public BackendBase()
         {
+            Detector.Setup();
             ColorMode = BestMode = Detector.GetBestColorMode();
         }
 
@@ -54,11 +55,11 @@ namespace ANSITerm.Backends
         public bool IsColorModeAvailable(ColorMode mode) => mode <= BestMode;
 
         public int Peek() => Console.In.Peek();
-        public int Read() => Console.Read();
+        public int Read() => Console.In.Read();
         public ConsoleKeyInfo ReadKey() => Console.ReadKey();
         public ConsoleKeyInfo ReadKey(bool intercept) => Console.ReadKey(intercept);
 
-        public void SetCursorPosition(int x, int y) => Console.SetCursorPosition(x, y);
+        public virtual void SetCursorPosition(int x, int y) => Console.SetCursorPosition(x, y);
 
         public bool TrySetColorMode(ColorMode mode)
         {
@@ -99,5 +100,7 @@ namespace ANSITerm.Backends
 
         protected virtual int GetWindowWidth() => Console.WindowWidth;
         protected virtual int GetWindowHeight() => Console.WindowHeight;
+
+        public string ReadLine() => Console.ReadLine();
     }
 }

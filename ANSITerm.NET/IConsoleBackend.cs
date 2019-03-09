@@ -26,6 +26,7 @@ namespace ANSITerm
         int Read();
         ConsoleKeyInfo ReadKey();
         ConsoleKeyInfo ReadKey(bool intercept);
+        string ReadLine();
         bool IsInputRedirected { get; }
         int CursorLeft { get; }
         int CursorTop { get; }

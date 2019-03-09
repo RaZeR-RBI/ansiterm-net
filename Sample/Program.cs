@@ -71,7 +71,7 @@ namespace Sample
 
         static void PrintTrueColor(IConsoleBackend term)
         {
-            var columns = term.WindowWidth / 2;
+            var columns = term.WindowWidth / 2 - 1;
             var hueStep = 360.0 / columns;
             for (var i = 0; i < columns; i++)
             {
@@ -85,10 +85,10 @@ namespace Sample
             for (int i = 0; i < 3; i++)
                 term.WriteLine("....");
             term.MoveCursor(Direction.Up, 2);
-            term.Write("This line sticks to the left");
+            term.Write($"This line sticks to the left, position is {term.CursorPosition}");
             term.SetCursorPosition(0, term.CursorTop + 1);
             term.MoveCursor(Direction.Forward, 2);
-            term.Write("This line is offset by two characters");
+            term.Write($"This line is offset by two characters, position is {term.CursorPosition}");
         }
 
         static IEnumerable<T> EnumValues<T>() =>
