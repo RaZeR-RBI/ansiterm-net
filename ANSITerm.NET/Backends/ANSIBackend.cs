@@ -24,8 +24,9 @@ namespace ANSITerm.Backends
                 switch (value.Mode)
                 {
                     case ColorMode.Color8:
+                        Set3BitColor(value, false); break;
                     case ColorMode.Color16:
-                        Console.ForegroundColor = ColorUtil.AsConsoleColor(value); break;
+                        Set4BitColor(value, false); break;
                     case ColorMode.Color256:
                         Set8BitColor(value, false); break;
                     case ColorMode.TrueColor:
@@ -43,8 +44,9 @@ namespace ANSITerm.Backends
                 switch (value.Mode)
                 {
                     case ColorMode.Color8:
+                        Set3BitColor(value, true); break;
                     case ColorMode.Color16:
-                        Console.BackgroundColor = ColorUtil.AsConsoleColor(value); break;
+                        Set4BitColor(value, true); break;
                     case ColorMode.Color256:
                         Set8BitColor(value, true); break;
                     case ColorMode.TrueColor:
@@ -78,6 +80,19 @@ namespace ANSITerm.Backends
                 Write($"\x1B[{y};{x}H");
             else
                 Console.SetCursorPosition(x, y);
+        }
+
+        private void Set3BitColor(ColorValue color, bool isBackground)
+        {
+            var code = (isBackground ? 40 : 30) + color.RawValue;
+            Write($"\x1B[{code}m");
+        }
+
+        private void Set4BitColor(ColorValue color, bool isBackground)
+        {
+            var colorIndex = color.RawValue > 7 ? color.RawValue + 52 : color.RawValue;
+            var code = (isBackground ? 40 : 30) + colorIndex;
+            Write($"\x1B[{code}m");
         }
 
         private void Set8BitColor(ColorValue color, bool isBackground)
