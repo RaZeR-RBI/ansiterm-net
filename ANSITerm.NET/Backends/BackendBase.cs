@@ -102,5 +102,7 @@ namespace ANSITerm.Backends
         protected virtual int GetWindowHeight() => Console.WindowHeight;
 
         public string ReadLine() => Console.ReadLine();
+
+        public abstract void SetFullscreen(bool value);
     }
 }

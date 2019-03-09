@@ -178,8 +178,8 @@ namespace ANSITerm.Backends
         private void GetWindowSizeFromStty()
         {
             var startInfo = new ProcessStartInfo("stty", "size") {
-                UseShellExecute = false,
-                RedirectStandardOutput = true
+                RedirectStandardOutput = true,
+                UseShellExecute = false 
             };
             var process = new Process() {
                 StartInfo = startInfo
@@ -273,5 +273,8 @@ namespace ANSITerm.Backends
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int ReadNextSymbol() => Console.Read();
+
+        public override void SetFullscreen(bool value) =>
+            Process.Start("tput", value ? "smcup" : "rmcup").WaitForExit();
     }
 }

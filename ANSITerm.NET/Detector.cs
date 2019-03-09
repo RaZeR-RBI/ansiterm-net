@@ -47,7 +47,7 @@ namespace ANSITerm
         {
             if (!IsOSPlatform(OSPlatform.Windows)) return false;
             // Windows checks
-            return !(IsConEmuANSI() || IsMSYS2());
+            return !(IsConEmuANSI() || IsMSYS2() || HasTermSet());
         }
 
         private static bool IsConEmuANSI() =>
@@ -55,11 +55,14 @@ namespace ANSITerm
         
         private static bool IsMSYS2() =>
             Environment.GetEnvironmentVariable("MSYSCON") != null;
+        
+        private static bool HasTermSet() =>
+            Environment.GetEnvironmentVariable("TERM") != null;
 
         private static ColorMode GetANSIColorCount()
         {
             if (IsOSPlatform(OSPlatform.Windows))
-            // assume that ConEmu true color support is enabled
+            // assume that true color support is enabled
             // looks like there is no way to properly detect it
                 return ColorMode.TrueColor;
             

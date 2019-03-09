@@ -46,5 +46,6 @@ namespace ANSITerm
         ColorMode ColorMode { get; set; }
         bool IsColorModeAvailable(ColorMode mode);
         bool TrySetColorMode(ColorMode mode);
+        void SetFullscreen(bool value);
     }
 }
