@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace ANSITerm.Backends
 {
-    public class ANSIBackend : BackendBase
+    internal class ANSIBackend : BackendBase
     {
 
         internal ANSIBackend() : base()

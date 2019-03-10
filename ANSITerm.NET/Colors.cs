@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace ANSITerm
 {
+    /// <summary>
+    /// Defines a color mode. Integer value of this enum corresponds
+    /// to the number of colors it defines (e.g. Color8 is equal to 8).
+    /// </summary>
     public enum ColorMode : int
     {
         Color8 = 8,
@@ -13,21 +17,63 @@ namespace ANSITerm
         TrueColor = 16777216
     }
 
+    /// <summary>
+    /// Defines a color value.
+    /// </summary>
     public struct ColorValue
     {
+        /// <summary>
+        /// Gets or sets the raw color value used by terminal.
+        /// For indexed modes it's the color index, for true color mode it's
+        /// Color.ToArgb() value.
+        /// </summary>
         public int RawValue;
+        /// <summary>
+        /// Gets or sets the color mode for which this color should be used.
+        /// </summary>
         public ColorMode Mode;
 
+        /// <summary>
+        /// Creates a color definition from 8-color palette.
+        /// </summary>
+        /// <seealso cref="ColorValue(Color16)" />
+        /// <seealso cref="ColorValue(Color256)" />
+        /// <seealso cref="ColorValue(Color)" />
         public ColorValue(Color8 color) : this((int)color, ColorMode.Color8) { }
+        /// <summary>
+        /// Creates a color definition from 16-color palette.
+        /// </summary>
+        /// <seealso cref="ColorValue(Color8)" />
+        /// <seealso cref="ColorValue(Color256)" />
+        /// <seealso cref="ColorValue(Color)" />
         public ColorValue(Color16 color) : this((int)color, ColorMode.Color16) { }
+        /// <summary>
+        /// Creates a color definition from 256-color palette.
+        /// </summary>
+        /// <seealso cref="ColorValue(Color8)" />
+        /// <seealso cref="ColorValue(Color16)" />
+        /// <seealso cref="ColorValue(Color)" />
         public ColorValue(Color256 color) : this((int)color, ColorMode.Color256) { }
 
+        /// <summary>
+        /// Creates a color definition from specified Color value.
+        /// </summary>
+        /// <seealso cref="ColorValue(Color8)" />
+        /// <seealso cref="ColorValue(Color16)" />
+        /// <seealso cref="ColorValue(Color256)" />
         public ColorValue(Color color)
         {
             RawValue = color.ToArgb();
             Mode = ColorMode.TrueColor;
         }
 
+        /// <summary>
+        /// Creates a indexed color mode definition.
+        /// </summary>
+        /// <seealso cref="ColorValue(Color8)" />
+        /// <seealso cref="ColorValue(Color16)" />
+        /// <seealso cref="ColorValue(Color256)" />
+        /// <seealso cref="ColorValue(Color)" />
         public ColorValue(int index, ColorMode mode)
         {
             if (mode == ColorMode.TrueColor)
@@ -40,6 +86,9 @@ namespace ANSITerm
             Mode = mode;
         }
 
+        /// <summary>
+        /// Gets the RGB color value.
+        /// </summary>
         public Color AsColor()
         {
             if (this.Mode == ColorMode.TrueColor)
@@ -47,6 +96,12 @@ namespace ANSITerm
             return ColorUtil.IndexedColors[this.RawValue];
         }
 
+        /// <summary>
+        /// Transforms the color value into target color mode.
+        /// If the target mode supports less colors, it's quantized to
+        /// nearest color supported based on it's RGB distance.
+        /// If the target mode supports more colors, it's converted as is.
+        /// </summary>
         public void Transform(ColorMode targetMode)
         {
             if (this.Mode == targetMode) return;
@@ -76,6 +131,9 @@ namespace ANSITerm
         }
     }
 
+    /// <summary>
+    /// Defines 8-color palette.
+    /// </summary>
     public enum Color8 : byte
     {
         Black = 0,
@@ -88,6 +146,9 @@ namespace ANSITerm
         White
     }
 
+    /// <summary>
+    /// Defines 16-color palette.
+    /// </summary>
     public enum Color16 : byte
     {
         Black = 0,
@@ -108,6 +169,9 @@ namespace ANSITerm
         BrightWhite
     }
 
+    /// <summary>
+    /// Defines 256-color palette.
+    /// </summary>
     public enum Color256
     {
         /* First 8 colors as in 8 color mode */

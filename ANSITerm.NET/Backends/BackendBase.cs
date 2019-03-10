@@ -4,9 +4,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 
+/// <summary>
+/// Defines console backends.
+/// </summary>
 namespace ANSITerm.Backends
 {
-    public abstract class BackendBase : IConsoleBackend
+    internal abstract class BackendBase : IConsoleBackend
     {
         public bool IsInputRedirected => Console.IsInputRedirected;
         public abstract int CursorLeft { get; }

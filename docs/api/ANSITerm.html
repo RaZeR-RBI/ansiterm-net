@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html><head><title>ANSITerm</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<style>
+        pre code.hljs {
+            display: block;
+        }
+
+        code.hljs {
+            display: inline;
+        }</style>
+</head><body>
+<h1>ANSITerm</h1>
+<p>
+<b>Namespace</b></p>
+<p>
+<b>Declared in:</b> <a href=".html"></a>
+</p>
+<hr>
+<p>
+
+This library provides cross-platform terminal access capabilities.
+</p>
+<h2>Nested types</h2>
+<h3>Class</h3>
+<li><a href="ANSITerm.ANSIConsole.html">ANSIConsole</a></li>
+<h3>Struct</h3>
+<li><a href="ANSITerm.ColorValue.html">ColorValue</a></li>
+<h3>Enum</h3>
+<li><a href="ANSITerm.Color16.html">Color16</a></li>
+<li><a href="ANSITerm.Color256.html">Color256</a></li>
+<li><a href="ANSITerm.Color8.html">Color8</a></li>
+<li><a href="ANSITerm.IConsoleBackend.ColorMode.html">ColorMode</a></li>
+<li><a href="ANSITerm.Direction.html">Direction</a></li>
+<h3>Interface</h3>
+<li><a href="ANSITerm.IConsoleBackend.html">IConsoleBackend</a></li>
+<h2>Examples</h2>
+<p>
+<pre><code>
+using ANSITerm;
+
+public static void Main(string[] args)
+{
+var term = ANSIConsole.GetInstance();
+term.ForegroundColor = new ColorValue(Color8.Red);
+term.WriteLine(&quot;Hello, world!&quot;);
+}
+
+</code></pre>
+</p>
+<hr>
+<a href="index.html">Back to index</a>
+<script>
+            var code = document.getElementsByTagName('code');
+            for (i = 0; i < code.length; i++) hljs.highlightBlock(code[i]);
+        </script>
+</body></html>

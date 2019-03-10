@@ -2,7 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>ANSITermNET</RootNamespace>
+    <RootNamespace>ANSITerm</RootNamespace>
+
+    <AssemblyName>ANSITerm.NET</AssemblyName>
+    <PackageId>ANSITerm</PackageId>
+    <PackageVersion>0.5-dev</PackageVersion>
+    <Authors>Vilkov Adel</Authors>
+    <Summary>Cross-platform ANSI-based multicolor terminal library</Summary>
+    <PackageLicenseUrl>MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/RaZeR-RBI/ansiterm-net</PackageProjectUrl>
+    <PackageTags>net;netcore;terminal;console;color;ansi;ascii</PackageTags>
+    <RepositoryUrl>https://github.com/RaZeR-RBI/ansiterm-net</RepositoryUrl>
+
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

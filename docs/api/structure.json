@@ -1,0 +1,335 @@
+{
+  "name": "",
+  "fullName": "",
+  "type": "Root",
+  "link": "",
+  "children": [
+    {
+      "name": "ANSITerm",
+      "fullName": "ANSITerm",
+      "type": "Namespace",
+      "link": "ANSITerm",
+      "children": [
+        {
+          "name": "ANSIConsole",
+          "fullName": "ANSITerm.ANSIConsole",
+          "type": "Class",
+          "link": "ANSITerm.ANSIConsole",
+          "children": [
+            {
+              "name": "GetInstance()",
+              "fullName": "ANSITerm.ANSIConsole.GetInstance()",
+              "type": "Method",
+              "link": "ANSITerm.ANSIConsole.GetInstance()"
+            }
+          ]
+        },
+        {
+          "name": "ColorValue",
+          "fullName": "ANSITerm.ColorValue",
+          "type": "Struct",
+          "link": "ANSITerm.ColorValue",
+          "children": [
+            {
+              "name": "RawValue",
+              "fullName": "ANSITerm.ColorValue.RawValue",
+              "type": "Field",
+              "link": "ANSITerm.ColorValue.RawValue"
+            },
+            {
+              "name": "Mode",
+              "fullName": "ANSITerm.ColorValue.Mode",
+              "type": "Field",
+              "link": "ANSITerm.ColorValue.Mode"
+            },
+            {
+              "name": "ColorValue(Color8)",
+              "fullName": "ANSITerm.ColorValue.ColorValue(Color8)",
+              "type": "Constructor",
+              "link": "ANSITerm.ColorValue.ColorValue(Color8)"
+            },
+            {
+              "name": "ColorValue(Color16)",
+              "fullName": "ANSITerm.ColorValue.ColorValue(Color16)",
+              "type": "Constructor",
+              "link": "ANSITerm.ColorValue.ColorValue(Color16)"
+            },
+            {
+              "name": "ColorValue(Color256)",
+              "fullName": "ANSITerm.ColorValue.ColorValue(Color256)",
+              "type": "Constructor",
+              "link": "ANSITerm.ColorValue.ColorValue(Color256)"
+            },
+            {
+              "name": "ColorValue(Color)",
+              "fullName": "ANSITerm.ColorValue.ColorValue(Color)",
+              "type": "Constructor",
+              "link": "ANSITerm.ColorValue.ColorValue(Color)"
+            },
+            {
+              "name": "ColorValue(int, ColorMode)",
+              "fullName": "ANSITerm.ColorValue.ColorValue(int, ColorMode)",
+              "type": "Constructor",
+              "link": "ANSITerm.ColorValue.ColorValue(int, ColorMode)"
+            },
+            {
+              "name": "AsColor()",
+              "fullName": "ANSITerm.ColorValue.AsColor()",
+              "type": "Method",
+              "link": "ANSITerm.ColorValue.AsColor()"
+            },
+            {
+              "name": "Transform(ColorMode)",
+              "fullName": "ANSITerm.ColorValue.Transform(ColorMode)",
+              "type": "Method",
+              "link": "ANSITerm.ColorValue.Transform(ColorMode)"
+            }
+          ]
+        },
+        {
+          "name": "Color16",
+          "fullName": "ANSITerm.Color16",
+          "type": "Enum",
+          "link": "ANSITerm.Color16"
+        },
+        {
+          "name": "Color256",
+          "fullName": "ANSITerm.Color256",
+          "type": "Enum",
+          "link": "ANSITerm.Color256"
+        },
+        {
+          "name": "Color8",
+          "fullName": "ANSITerm.Color8",
+          "type": "Enum",
+          "link": "ANSITerm.Color8"
+        },
+        {
+          "name": "ColorMode",
+          "fullName": "ANSITerm.ColorMode",
+          "type": "Enum",
+          "link": "ANSITerm.ColorMode"
+        },
+        {
+          "name": "Direction",
+          "fullName": "ANSITerm.Direction",
+          "type": "Enum",
+          "link": "ANSITerm.Direction"
+        },
+        {
+          "name": "IConsoleBackend",
+          "fullName": "ANSITerm.IConsoleBackend",
+          "type": "Interface",
+          "link": "ANSITerm.IConsoleBackend",
+          "children": [
+            {
+              "name": "IsInputRedirected",
+              "fullName": "ANSITerm.IConsoleBackend.IsInputRedirected",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.IsInputRedirected"
+            },
+            {
+              "name": "CursorLeft",
+              "fullName": "ANSITerm.IConsoleBackend.CursorLeft",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.CursorLeft"
+            },
+            {
+              "name": "CursorTop",
+              "fullName": "ANSITerm.IConsoleBackend.CursorTop",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.CursorTop"
+            },
+            {
+              "name": "CursorPosition",
+              "fullName": "ANSITerm.IConsoleBackend.CursorPosition",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.CursorPosition"
+            },
+            {
+              "name": "CursorVisible",
+              "fullName": "ANSITerm.IConsoleBackend.CursorVisible",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.CursorVisible"
+            },
+            {
+              "name": "InputEncoding",
+              "fullName": "ANSITerm.IConsoleBackend.InputEncoding",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.InputEncoding"
+            },
+            {
+              "name": "IsErrorRedirected",
+              "fullName": "ANSITerm.IConsoleBackend.IsErrorRedirected",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.IsErrorRedirected"
+            },
+            {
+              "name": "IsOutputRedirected",
+              "fullName": "ANSITerm.IConsoleBackend.IsOutputRedirected",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.IsOutputRedirected"
+            },
+            {
+              "name": "KeyAvailable",
+              "fullName": "ANSITerm.IConsoleBackend.KeyAvailable",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.KeyAvailable"
+            },
+            {
+              "name": "OutputEncoding",
+              "fullName": "ANSITerm.IConsoleBackend.OutputEncoding",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.OutputEncoding"
+            },
+            {
+              "name": "Title",
+              "fullName": "ANSITerm.IConsoleBackend.Title",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.Title"
+            },
+            {
+              "name": "WindowWidth",
+              "fullName": "ANSITerm.IConsoleBackend.WindowWidth",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.WindowWidth"
+            },
+            {
+              "name": "WindowHeight",
+              "fullName": "ANSITerm.IConsoleBackend.WindowHeight",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.WindowHeight"
+            },
+            {
+              "name": "ForegroundColor",
+              "fullName": "ANSITerm.IConsoleBackend.ForegroundColor",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.ForegroundColor"
+            },
+            {
+              "name": "BackgroundColor",
+              "fullName": "ANSITerm.IConsoleBackend.BackgroundColor",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.BackgroundColor"
+            },
+            {
+              "name": "ColorMode",
+              "fullName": "ANSITerm.IConsoleBackend.ColorMode",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.ColorMode"
+            },
+            {
+              "name": "Clear()",
+              "fullName": "ANSITerm.IConsoleBackend.Clear()",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.Clear()"
+            },
+            {
+              "name": "IsColorModeAvailable(ColorMode)",
+              "fullName": "ANSITerm.IConsoleBackend.IsColorModeAvailable(ColorMode)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.IsColorModeAvailable(ColorMode)"
+            },
+            {
+              "name": "MoveCursor(Direction, int)",
+              "fullName": "ANSITerm.IConsoleBackend.MoveCursor(Direction, int)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.MoveCursor(Direction, int)"
+            },
+            {
+              "name": "Peek()",
+              "fullName": "ANSITerm.IConsoleBackend.Peek()",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.Peek()"
+            },
+            {
+              "name": "Read()",
+              "fullName": "ANSITerm.IConsoleBackend.Read()",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.Read()"
+            },
+            {
+              "name": "ReadKey()",
+              "fullName": "ANSITerm.IConsoleBackend.ReadKey()",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.ReadKey()"
+            },
+            {
+              "name": "ReadKey(bool)",
+              "fullName": "ANSITerm.IConsoleBackend.ReadKey(bool)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.ReadKey(bool)"
+            },
+            {
+              "name": "ReadLine()",
+              "fullName": "ANSITerm.IConsoleBackend.ReadLine()",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.ReadLine()"
+            },
+            {
+              "name": "ResetColor()",
+              "fullName": "ANSITerm.IConsoleBackend.ResetColor()",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.ResetColor()"
+            },
+            {
+              "name": "SetCursorPosition(int, int)",
+              "fullName": "ANSITerm.IConsoleBackend.SetCursorPosition(int, int)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.SetCursorPosition(int, int)"
+            },
+            {
+              "name": "SetCursorPosition(Point)",
+              "fullName": "ANSITerm.IConsoleBackend.SetCursorPosition(Point)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.SetCursorPosition(Point)"
+            },
+            {
+              "name": "SetFullscreen(bool)",
+              "fullName": "ANSITerm.IConsoleBackend.SetFullscreen(bool)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.SetFullscreen(bool)"
+            },
+            {
+              "name": "TrySetColorMode(ColorMode)",
+              "fullName": "ANSITerm.IConsoleBackend.TrySetColorMode(ColorMode)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.TrySetColorMode(ColorMode)"
+            },
+            {
+              "name": "Write(string)",
+              "fullName": "ANSITerm.IConsoleBackend.Write(string)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.Write(string)"
+            },
+            {
+              "name": "WriteError(string)",
+              "fullName": "ANSITerm.IConsoleBackend.WriteError(string)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.WriteError(string)"
+            },
+            {
+              "name": "WriteErrorLine(string)",
+              "fullName": "ANSITerm.IConsoleBackend.WriteErrorLine(string)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.WriteErrorLine(string)"
+            },
+            {
+              "name": "WriteLine(string)",
+              "fullName": "ANSITerm.IConsoleBackend.WriteLine(string)",
+              "type": "Method",
+              "link": "ANSITerm.IConsoleBackend.WriteLine(string)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ANSITerm.Backends",
+      "fullName": "ANSITerm.Backends",
+      "type": "Namespace",
+      "link": "ANSITerm.Backends",
+      "children": []
+    }
+  ]
+}

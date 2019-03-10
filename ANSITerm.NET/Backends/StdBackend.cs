@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace ANSITerm.Backends
 {
-    public class StdBackend : BackendBase
+    internal class StdBackend : BackendBase
     {
         public override ColorValue ForegroundColor
         {

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html><head><title>ANSITerm.IConsoleBackend.SetCursorPosition(int, int)</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<style>
+        pre code.hljs {
+            display: block;
+        }
+
+        code.hljs {
+            display: inline;
+        }</style>
+</head><body>
+<h1>SetCursorPosition(int, int)</h1>
+<p>
+<b>Method</b></p>
+<p>
+<b>Namespace:</b> <a href="ANSITerm.html">ANSITerm</a>
+</p>
+<p>
+<b>Declared in:</b> <a href="ANSITerm.IConsoleBackend.html">ANSITerm.IConsoleBackend</a>
+</p>
+<hr>
+<p>
+
+Sets the cursor position.
+</p>
+<h2>Syntax</h2>
+<pre><code>public void SetCursorPosition(
+	int x,
+	int y
+)</code></pre>
+<h3>Parameters</h3>
+<p>
+<code>x</code>
+</p>
+<p>
+Ranges from 0 to WindowWidth - 1</p>
+<p>
+<code>y</code>
+</p>
+<p>
+Ranges from 0 to WindowHeight - 1</p>
+<h2>Remarks</h2>
+
+Note: the origin is equal to 0, 0 and is located
+on the top-left corner of the terminal part after the
+application invocation line, e.g.:
+
+<pre><code>
+user@host:~$ dotnet MyAwesomeApp.dll
+Hello, world!
+</code></pre>
+
+
+The 'H' symbol is located at 0, 0 in this case, which
+should feel pretty familiar to most UNIX terminal users.
+On Windows this behaviour is emulated by saving initial
+cursor position when the console is initialized and
+offsetting by it.
+<h2>See also</h2>
+<li><a href="ANSITerm.IConsoleBackend.SetCursorPosition(Point).html">SetCursorPosition(Point)</a></li>
+<hr>
+<a href="index.html">Back to index</a>
+<script>
+            var code = document.getElementsByTagName('code');
+            for (i = 0; i < code.length; i++) hljs.highlightBlock(code[i]);
+        </script>
+</body></html>
