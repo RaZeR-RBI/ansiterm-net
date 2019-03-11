@@ -3,6 +3,11 @@ Cross-platform .NET Standard 2.0 library for working with terminals.
 
 [API Documentation](https://razer-rbi.github.io/ansiterm-net/api/index.html)
 
+# Installation
+```
+dotnet add package ANSITerm
+```
+
 # Features
 * 8, 16, 256-color and true color modes
 * Automatic conversion between colors (nearest RGB)
