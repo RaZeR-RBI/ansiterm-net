@@ -5,20 +5,26 @@
     <RootNamespace>ANSITerm</RootNamespace>
 
     <AssemblyName>ANSITerm.NET</AssemblyName>
+    <!--
     <PackageId>ANSITerm</PackageId>
     <PackageVersion>0.5-dev</PackageVersion>
     <Authors>Vilkov Adel</Authors>
-    <Summary>Cross-platform ANSI-based multicolor terminal library</Summary>
-    <PackageLicenseUrl>MIT</PackageLicenseUrl>
+    <PackageDescription>Cross-platform ANSI-based multicolor terminal library</PackageDescription>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/RaZeR-RBI/ansiterm-net</PackageProjectUrl>
     <PackageTags>net;netcore;terminal;console;color;ansi;ascii</PackageTags>
     <RepositoryUrl>https://github.com/RaZeR-RBI/ansiterm-net</RepositoryUrl>
-
+    -->
     <IsPackable>true</IsPackable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../LICENSE" Pack="true" PackagePath="$(PackageLicenseFile)"/>
   </ItemGroup>
 
 </Project>
