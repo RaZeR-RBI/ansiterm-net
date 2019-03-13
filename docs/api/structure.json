@@ -79,6 +79,18 @@
               "link": "ANSITerm.ColorValue.AsColor()"
             },
             {
+              "name": "Equals(object)",
+              "fullName": "ANSITerm.ColorValue.Equals(object)",
+              "type": "Method",
+              "link": "ANSITerm.ColorValue.Equals(object)"
+            },
+            {
+              "name": "GetHashCode()",
+              "fullName": "ANSITerm.ColorValue.GetHashCode()",
+              "type": "Method",
+              "link": "ANSITerm.ColorValue.GetHashCode()"
+            },
+            {
               "name": "Transform(ColorMode)",
               "fullName": "ANSITerm.ColorValue.Transform(ColorMode)",
               "type": "Method",
@@ -199,6 +211,12 @@
               "fullName": "ANSITerm.IConsoleBackend.WindowHeight",
               "type": "Property",
               "link": "ANSITerm.IConsoleBackend.WindowHeight"
+            },
+            {
+              "name": "WindowSize",
+              "fullName": "ANSITerm.IConsoleBackend.WindowSize",
+              "type": "Property",
+              "link": "ANSITerm.IConsoleBackend.WindowSize"
             },
             {
               "name": "ForegroundColor",

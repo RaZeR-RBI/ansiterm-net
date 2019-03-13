@@ -39,6 +39,7 @@ namespace ANSITerm.Backends
         }
         public int WindowWidth => GetWindowWidth();
         public int WindowHeight => GetWindowHeight();
+        public Size WindowSize => new Size(WindowWidth, WindowHeight);
         public abstract ColorValue ForegroundColor { set; }
         public abstract ColorValue BackgroundColor { set; }
         public ColorMode ColorMode { get; set; } = ColorMode.Color8;

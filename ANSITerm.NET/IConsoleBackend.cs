@@ -185,6 +185,10 @@ namespace ANSITerm
         /// </summary>
         int WindowHeight { get; }
         /// <summary>
+        /// Gets the terminal window size in rows and columns.
+        /// </summary>
+        Size WindowSize { get; }
+        /// <summary>
         /// Sets the foreground color. The specified color is converted
         /// to <see cref="ColorMode" /> if needed.
         /// </summary>
