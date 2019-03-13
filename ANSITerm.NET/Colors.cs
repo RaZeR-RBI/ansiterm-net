@@ -129,6 +129,19 @@ namespace ANSITerm
                 RawValue = ColorUtil.IndexedColors[this.RawValue].ToArgb();
             Mode = targetMode;
         }
+
+        private bool Equals(ColorValue other) =>
+            (this.RawValue == other.RawValue) && (this.Mode == other.Mode);
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ColorValue)
+                return Equals((ColorValue)obj);
+            return false;
+        }
+
+        // should be valid for most use cases
+        public override int GetHashCode() => RawValue;
     }
 
     /// <summary>
