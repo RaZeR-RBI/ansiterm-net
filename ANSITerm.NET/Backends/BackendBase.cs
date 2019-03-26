@@ -60,8 +60,8 @@ namespace ANSITerm.Backends
 
         public int Peek() => Console.In.Peek();
         public int Read() => Console.In.Read();
-        public ConsoleKeyInfo ReadKey() => Console.ReadKey();
-        public ConsoleKeyInfo ReadKey(bool intercept) => Console.ReadKey(intercept);
+        public virtual ConsoleKeyInfo ReadKey() => Console.ReadKey();
+        public virtual ConsoleKeyInfo ReadKey(bool intercept) => Console.ReadKey(intercept);
 
         public abstract void SetCursorPosition(int x, int y);
 

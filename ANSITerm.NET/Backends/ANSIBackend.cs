@@ -9,10 +9,18 @@ namespace ANSITerm.Backends
     internal class ANSIBackend : BackendBase
     {
 
+        bool echo = true;
         internal ANSIBackend() : base()
         {
             CheckIfWidthAndHeightIsAvailable();
             CheckIfANSIShouldBeUsedForCursor();
+            TrySetEchoMode(false); // needed for ReadKey
+            /* 
+                TODO: Read echo parameter at app start to ensure that tty settings
+                are reset to values before app launch.
+                Current logic assumes that everyone leaves echo on by default.
+                */
+            AppDomain.CurrentDomain.ProcessExit += (s, e) => TrySetEchoMode(true);
         }
 
         public override ColorValue ForegroundColor
@@ -55,16 +63,20 @@ namespace ANSITerm.Backends
             }
         }
 
-        public override int CursorLeft {
-            get {
+        public override int CursorLeft
+        {
+            get
+            {
                 if (_useANSIForCursor)
                     return CursorPosition.X;
                 return Console.CursorLeft;
             }
         }
 
-        public override int CursorTop {
-            get {
+        public override int CursorTop
+        {
+            get
+            {
                 if (_useANSIForCursor)
                     return CursorPosition.Y;
                 return Console.CursorTop;
@@ -73,7 +85,7 @@ namespace ANSITerm.Backends
 
         public override Point CursorPosition => _useANSIForCursor ? GetCursorPositionCPR() :
             new Point(Console.CursorLeft, Console.CursorTop);
-        
+
         public override void SetCursorPosition(int x, int y)
         {
             if (_useANSIForCursor)
@@ -126,6 +138,14 @@ namespace ANSITerm.Backends
 
         public override void ResetColor() => Write("\x1B[0m");
 
+        public override ConsoleKeyInfo ReadKey(bool intercept)
+        {
+            var key = base.ReadKey(intercept);
+            if (!intercept && !echo)
+                Write(key.KeyChar.ToString());
+            return key;
+        }
+
 
         /* Terminal window size */
         private bool _windowSizeFromEnv = false;
@@ -144,7 +164,7 @@ namespace ANSITerm.Backends
                 {"environment variables", GetWindowSizeFromEnv },
                 {"stty", GetWindowSizeFromStty }
             };
-            foreach(var pair in sources)
+            foreach (var pair in sources)
             {
                 WriteErrorLine($"Trying to get window size from {pair.Key}...");
                 try
@@ -168,26 +188,44 @@ namespace ANSITerm.Backends
                 var rows = Console.WindowHeight;
                 if (cols == 0 || rows == 0)
                     throw new ArgumentOutOfRangeException("Invalid size reported from terminfo");
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 _windowSizeFromEnv = true;
                 WriteErrorLine($"Could not obtain window size, falling back to $COLUMNS and $ROWS. Reason: {ex}");
-                WindowSizeFallback(); 
+                WindowSizeFallback();
             }
         }
 
         private void GetWindowSizeFromStty()
         {
-            var startInfo = new ProcessStartInfo("stty", "size") {
+            var startInfo = new ProcessStartInfo("stty", "size")
+            {
                 RedirectStandardOutput = true,
-                UseShellExecute = false 
+                UseShellExecute = false
             };
-            var process = new Process() {
+            var process = new Process()
+            {
                 StartInfo = startInfo
             };
             process.Start();
             var output = process.StandardOutput.ReadToEnd().Split(' ');
             _windowWidthFromEnv = int.Parse(output[1]);
             _windowHeightFromEnv = int.Parse(output[1]);
+        }
+
+        // workaround for https://github.com/dotnet/corefx/issues/30610
+        private void TrySetEchoMode(bool echo)
+        {
+            try
+            {
+                Process.Start("stty", echo ? "echo" : "-echo");
+                this.echo = echo;
+            }
+            catch (Exception ex)
+            {
+                WriteErrorLine($"Could not set ECHO to {echo}, reason: {ex}");
+            }
         }
 
         private void GetWindowSizeFromEnv()
@@ -209,7 +247,9 @@ namespace ANSITerm.Backends
             {
                 var left = Console.CursorLeft;
                 var top = Console.CursorTop;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 WriteErrorLine($"Falling back to ANSI-based cursor control, reason: {ex}");
                 _useANSIForCursor = true;
             }
@@ -228,8 +268,8 @@ namespace ANSITerm.Backends
                 cur = ReadNextSymbol();
             while (cur != (int)'[') // wait for [
                 cur = ReadNextSymbol();
-            
-            
+
+
             var i = 0;
             var splitterPos = 0;
             while (cur != (int)';') // collect digits until ;
