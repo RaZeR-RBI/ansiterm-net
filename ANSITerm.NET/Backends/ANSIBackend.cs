@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using ANSITerm.NET.Native;
 
 namespace ANSITerm.Backends
 {
@@ -14,13 +15,6 @@ namespace ANSITerm.Backends
         {
             CheckIfWidthAndHeightIsAvailable();
             CheckIfANSIShouldBeUsedForCursor();
-            TrySetEchoMode(false); // needed for ReadKey
-            /* 
-                TODO: Read echo parameter at app start to ensure that tty settings
-                are reset to values before app launch.
-                Current logic assumes that everyone leaves echo on by default.
-                */
-            AppDomain.CurrentDomain.ProcessExit += (s, e) => TrySetEchoMode(true);
         }
 
         public override ColorValue ForegroundColor
@@ -82,6 +76,8 @@ namespace ANSITerm.Backends
                 return Console.CursorTop;
             }
         }
+
+        public override bool KeyAvailable => Unix.PollStdin() || base.KeyAvailable;
 
         public override Point CursorPosition => _useANSIForCursor ? GetCursorPositionCPR() :
             new Point(Console.CursorLeft, Console.CursorTop);
@@ -212,20 +208,6 @@ namespace ANSITerm.Backends
             var output = process.StandardOutput.ReadToEnd().Split(' ');
             _windowWidthFromEnv = int.Parse(output[1]);
             _windowHeightFromEnv = int.Parse(output[1]);
-        }
-
-        // workaround for https://github.com/dotnet/corefx/issues/30610
-        private void TrySetEchoMode(bool echo)
-        {
-            try
-            {
-                Process.Start("stty", echo ? "echo" : "-echo");
-                this.echo = echo;
-            }
-            catch (Exception ex)
-            {
-                WriteErrorLine($"Could not set ECHO to {echo}, reason: {ex}");
-            }
         }
 
         private void GetWindowSizeFromEnv()

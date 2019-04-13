@@ -25,7 +25,7 @@ namespace ANSITerm.Backends
         }
         public bool IsErrorRedirected => Console.IsErrorRedirected;
         public bool IsOutputRedirected => Console.IsOutputRedirected;
-        public bool KeyAvailable => Console.KeyAvailable;
+        public virtual bool KeyAvailable => Console.KeyAvailable;
         public int LargestWindowHeight => Console.LargestWindowHeight;
         public int LargestWindowWidth => Console.LargestWindowWidth;
         public Encoding OutputEncoding

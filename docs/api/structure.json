@@ -348,6 +348,13 @@
       "type": "Namespace",
       "link": "ANSITerm.Backends",
       "children": []
+    },
+    {
+      "name": "ANSITerm.NET.Native",
+      "fullName": "ANSITerm.NET.Native",
+      "type": "Namespace",
+      "link": "ANSITerm.NET.Native",
+      "children": []
     }
   ]
 }

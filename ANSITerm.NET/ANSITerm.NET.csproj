@@ -6,6 +6,7 @@
     <AssemblyName>ANSITerm.NET</AssemblyName>
     <IsPackable>true</IsPackable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

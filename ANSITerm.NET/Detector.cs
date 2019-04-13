@@ -52,23 +52,23 @@ namespace ANSITerm
 
         private static bool IsConEmuANSI() =>
             Environment.GetEnvironmentVariable("CONEMUANSI") == "ON";
-        
+
         private static bool IsMSYS2() =>
             Environment.GetEnvironmentVariable("MSYSCON") != null;
-        
+
         private static bool HasTermSet() =>
             Environment.GetEnvironmentVariable("TERM") != null;
 
         private static ColorMode GetANSIColorCount()
         {
             if (IsOSPlatform(OSPlatform.Windows))
-            // assume that true color support is enabled
-            // looks like there is no way to properly detect it
+                // assume that true color support is enabled
+                // looks like there is no way to properly detect it
                 return ColorMode.TrueColor;
-            
+
             var colors = GetMaxColorsFromTermInfo();
             var result = ColorMode.Color8;
-            foreach(var mode in Enum.GetValues(typeof(ColorMode)).Cast<int>())
+            foreach (var mode in Enum.GetValues(typeof(ColorMode)).Cast<int>())
             {
                 if (colors < mode) break;
                 result = (ColorMode)mode;
@@ -78,16 +78,24 @@ namespace ANSITerm
 
         public static void Setup()
         {
-            if (IsMSYS2())
-                TrySetSttyParameters();
+            // workaround for:
+            // https://github.com/dotnet/corefx/issues/36761
+            // https://github.com/dotnet/corefx/issues/25916
+            if (IsMSYS2() || !IsOSPlatform(OSPlatform.Windows))
+            {
+                TrySetSttyParameters("-echo -icanon min 1 time 0");
+                AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+                    TrySetSttyParameters("sane");
+            }
         }
 
-        private static void TrySetSttyParameters()
+        private static void TrySetSttyParameters(string param)
         {
             try
             {
-                Process.Start("stty", "-icanon min 1 time 0").WaitForExit();
-            } catch (Exception) {}
+                Process.Start("stty", param).WaitForExit();
+            }
+            catch (Exception) { }
         }
     }
 }
