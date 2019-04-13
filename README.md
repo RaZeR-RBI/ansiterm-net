@@ -28,7 +28,7 @@ Supported terminals (no configuration):
 
 Working terminals needing configuration:
 * MobaXTerm - `$LINES` and `$ROWS` environment variables must be set, also
-`stty icanon min 1` is required for retrieving cursor position.
+`stty -echo -icanon min 1 time 0` should be run prior to launching (use `stty sane` to restore terminal settings).
 
 ANSI backend is used if any of these variables is set:
 * `CONEMUANSI=ON` (set by ConEmu)
