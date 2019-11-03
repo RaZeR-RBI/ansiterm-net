@@ -76,10 +76,37 @@ namespace ANSITerm.Backends
 			return false;
 		}
 
-		public virtual void Write(string data) => Console.Out.Write(data);
-		public void WriteLine(string data) => Write(data + Environment.NewLine);
-		public virtual void WriteError(string data) => Console.Error.Write(data);
-		public void WriteErrorLine(string data) => WriteError(data + Environment.NewLine);
+		// note: ToArray() is needed because Console API doesn't work with
+		// spans and/or pointers. Sadly, it performs a heap allocation :(
+		// https://github.com/dotnet/corefx/blob/v2.0.8/src/System.Memory/src/System/ReadOnlySpan.cs#L314
+		public virtual void Write(ReadOnlySpan<char> data) =>
+			Console.Out.Write(data.ToArray());
+
+		public virtual void Write(string data) =>
+			Console.Out.Write(data);
+
+		public void WriteLine(ReadOnlySpan<char> data)
+		{
+			Console.Out.Write(data.ToArray());
+			Console.Out.WriteLine();
+		}
+
+		public void WriteLine(string data) => Console.Out.WriteLine(data);
+
+		public virtual void WriteError(ReadOnlySpan<char> data) =>
+			Console.Error.Write(data.ToArray());
+
+		public virtual void WriteError(string data) =>
+			Console.Error.Write(data);
+
+		public void WriteErrorLine(ReadOnlySpan<char> data)
+		{
+			Console.Error.Write(data.ToArray());
+			Console.Error.WriteLine();
+		}
+
+		public void WriteErrorLine(string data) =>
+			Console.Error.WriteLine(data);
 
 		public virtual void ResetColor() => Console.ResetColor();
 

@@ -134,13 +134,17 @@ namespace ANSITerm.Backends
 			Write($"\x1B[{steps}{code}");
 		}
 
-		public override void ResetColor() => Write("\x1B[0m");
+		public override void ResetColor() => Write("\x1B[0m".AsSpan());
 
 		public override ConsoleKeyInfo ReadKey(bool intercept)
 		{
 			var key = base.ReadKey(intercept);
+			var keyChar = key.KeyChar;
 			if (!intercept && !echo)
-				Write(key.KeyChar.ToString());
+				unsafe
+				{
+					Write(new Span<char>(&keyChar, 1));
+				}
 			return key;
 		}
 

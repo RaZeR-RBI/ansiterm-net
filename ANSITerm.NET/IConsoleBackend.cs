@@ -37,7 +37,7 @@ namespace ANSITerm
 		/// user@host:~$ dotnet MyAwesomeApp.dll
 		/// Hello, world!
 		/// </code>
-		/// 
+		///
 		/// The 'H' symbol is located at 0, 0 in this case, which
 		/// should feel pretty familiar to most UNIX terminal users.
 		/// On Windows this behaviour is emulated by saving initial
@@ -64,24 +64,62 @@ namespace ANSITerm
 		/// <summary>
 		/// Writes a string to the standard output.
 		/// </summary>
+		/// <seealso cref="Write(string)" />
 		/// <seealso cref="WriteLine(string)" />
+		/// <seealso cref="WriteLine(ReadOnlySpan<char>)" />
+		void Write(ReadOnlySpan<char> data);
+		/// <summary>
+		/// Writes a string to the standard output.
+		/// </summary>
+		/// <seealso cref="Write(ReadOnlySpan<char>)" />
+		/// <seealso cref="WriteLine(string)" />
+		/// <seealso cref="WriteLine(ReadOnlySpan<char>)" />
 		void Write(string data);
 		/// <summary>
 		/// Writes a string to the standard output, terminating it with
 		/// <c>Environment.NewLine</c>.
 		/// </summary>
+		/// <seealso cref="Write(ReadOnlySpan<char>)" />
 		/// <seealso cref="Write(string)" />
+		/// <seealso cref="WriteLine(string)" />
+		void WriteLine(ReadOnlySpan<char> data);
+		/// <summary>
+		/// Writes a string to the standard output, terminating it with
+		/// <c>Environment.NewLine</c>.
+		/// </summary>
+		/// <seealso cref="Write(ReadOnlySpan<char>)" />
+		/// <seealso cref="Write(string)" />
+		/// <seealso cref="WriteLine(ReadOnlySpan<char>)" />
 		void WriteLine(string data);
 		/// <summary>
 		/// Writes a string to the standard error stream.
 		/// </summary>
+		/// <seealso cref="WriteError(string)" />
+		/// <seealso cref="WriteErrorLine(ReadOnlySpan<char>)" />
+		/// <seealso cref="WriteErrorLine(string)" />
+		void WriteError(ReadOnlySpan<char> data);
+		/// <summary>
+		/// Writes a string to the standard error stream.
+		/// </summary>
+		/// <seealso cref="WriteError(ReadOnlySpan<char>)" />
+		/// <seealso cref="WriteErrorLine(ReadOnlySpan<char>)" />
 		/// <seealso cref="WriteErrorLine(string)" />
 		void WriteError(string data);
 		/// <summary>
 		/// Writes a string to the standard error stream, terminating it
 		/// with <c>Environment.NewLine</c>.
 		/// </summary>
+		/// <seealso cref="WriteError(ReadOnlySpan<char>)" />
 		/// <seealso cref="WriteError(string)" />
+		/// <seealso cref="WriteErrorLine(string)" />
+		void WriteErrorLine(ReadOnlySpan<char> data);
+		/// <summary>
+		/// Writes a string to the standard error stream, terminating it
+		/// with <c>Environment.NewLine</c>.
+		/// </summary>
+		/// <seealso cref="WriteError(ReadOnlySpan<char>)" />
+		/// <seealso cref="WriteError(string)" />
+		/// <seealso cref="WriteErrorLine(ReadOnlySpan<char>)" />
 		void WriteErrorLine(string data);
 		/// <summary>
 		/// Peeks next character from the input stream.
@@ -101,7 +139,7 @@ namespace ANSITerm
 		/// <seealso cref="ReadKey()" />
 		int Read();
 		/// <summary>
-		/// Reads the next character or function key pressed by user. The 
+		/// Reads the next character or function key pressed by user. The
 		/// pressed key is displayed.
 		/// Equivalent to <see cref="ReadKey(bool)" /> with <c>intercept = true</c>
 		/// </summary>
@@ -120,7 +158,7 @@ namespace ANSITerm
 		ConsoleKeyInfo ReadKey(bool intercept);
 		/// <summary>
 		/// Reads the next line of characters from the input stream.
-		/// This call blocks until the user presses Enter. 
+		/// This call blocks until the user presses Enter.
 		/// </summary>
 		string ReadLine();
 		/// <summary>
@@ -211,7 +249,7 @@ namespace ANSITerm
 		/// </summary>
 		/// <remarks>
 		/// If you want to check if a color mode is supported
-		/// before setting it, you can use 
+		/// before setting it, you can use
 		/// <see cref="IsColorModeAvailable(ColorMode)" /> or
 		/// <see cref="TrySetColorMode(ColorMode)" /> depending on the usage.
 		/// </remarks>
